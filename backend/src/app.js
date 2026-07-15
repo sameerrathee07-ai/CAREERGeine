@@ -25,8 +25,11 @@ import aiRoutes from './routes/ai.js';
 
 const app = express();
 
-// Security headers (COOP disabled — Firebase popup auth needs cross-origin)
-app.use(helmet({ crossOriginOpenerPolicy: false }));
+// Security headers (Firebase Auth needs wide CSP)
+app.use(helmet({
+  crossOriginOpenerPolicy: false,
+  contentSecurityPolicy: false,
+}));
 
 // CORS (only needed if frontend is on a different origin)
 app.use(cors({
