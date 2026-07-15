@@ -1,9 +1,15 @@
 import express from 'express';
+import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import { fileURLToPath } from 'url';
 import { errorHandler } from './middleware/errorHandler.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distPath = path.resolve(__dirname, '../../dist');
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -74,6 +80,15 @@ app.use('/api/feedback', feedbackRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/help', helpRoutes);
 app.use('/api/ai', aiRoutes);
+
+// Serve built frontend in production
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res) => {
+    if (req.path.startsWith('/api/')) return;
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 // 404 handler
 app.use((req, res) => {
