@@ -86,17 +86,3 @@ export async function getGoogleRedirectResult() {
     throw err;
   }
 }
-
-export async function getGoogleRedirectResult() {
-  if (!hasFirebaseConfig || !auth) return null;
-  const { GoogleAuthProvider, getRedirectResult } = await import('firebase/auth');
-  try {
-    const result = await getRedirectResult(auth);
-    if (!result) return null;
-    const idToken = await result.user.getIdToken();
-    return { user: result.user, idToken };
-  } catch (err) {
-    console.error('Google redirect result error:', err);
-    throw err;
-  }
-}
