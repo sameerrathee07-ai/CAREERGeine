@@ -63,16 +63,28 @@ export function onAuthChange(callback) {
   return () => {};
 }
 
-// ─── Google Sign-In (popup) ───
+// ─── Google Sign-In (redirect — Render proxy blocks popup) ───
 
 export async function signInWithGoogle() {
   checkInit();
-  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+  const { GoogleAuthProvider, signInWithRedirect } = await import('firebase/auth');
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-  const result = await signInWithPopup(auth, provider);
-  const idToken = await result.user.getIdToken();
-  return { user: result.user, idToken };
+  await signInWithRedirect(auth, provider);
+}
+
+export async function getGoogleRedirectResult() {
+  if (!hasFirebaseConfig || !auth) return null;
+  const { GoogleAuthProvider, getRedirectResult } = await import('firebase/auth');
+  try {
+    const result = await getRedirectResult(auth);
+    if (!result) return null;
+    const idToken = await result.user.getIdToken();
+    return { user: result.user, idToken };
+  } catch (err) {
+    console.error('Google redirect result error:', err);
+    throw err;
+  }
 }
 
 export async function getGoogleRedirectResult() {
