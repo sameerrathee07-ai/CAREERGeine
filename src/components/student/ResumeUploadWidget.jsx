@@ -1,29 +1,57 @@
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { uploadResume } from '../../store/slices/resumeSlice';
+import * as pdfjsLib from 'pdfjs-dist';
+import { uploadResumeFromText } from '../../store/slices/resumeSlice';
 import { addToast } from '../../store/slices/uiSlice';
 import Button from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
+
 export function ResumeUploadWidget() {
   const [dragOver, setDragOver] = useState(false);
+  const [parsing, setParsing] = useState(false);
   const fileRef = useRef();
   const dispatch = useDispatch();
   const { loading, current } = useSelector((state) => state.resumes);
 
-  const handleFile = (file) => {
+  const extractTextFromPDF = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map((item) => item.str).join(' ') + '\n';
+    }
+    return text;
+  };
+
+  const handleFile = async (file) => {
     if (!file) return;
-    if (file.type !== 'application/pdf' && !file.name.endsWith('.pdf') && !file.name.endsWith('.docx')) {
-      dispatch(addToast({ type: 'error', message: 'Please upload a PDF or DOCX file' }));
+    if (!file.name.endsWith('.pdf')) {
+      dispatch(addToast({ type: 'error', message: 'Please upload a PDF file' }));
       return;
     }
-    const formData = new FormData();
-    formData.append('resume', file);
-    dispatch(uploadResume(formData)).unwrap()
-      .then(() => dispatch(addToast({ type: 'success', message: 'Resume uploaded successfully!' })))
-      .catch((err) => dispatch(addToast({ type: 'error', message: err || 'Upload failed' })));
+    setParsing(true);
+    try {
+      const text = await extractTextFromPDF(file);
+      if (text.trim().length < 20) {
+        dispatch(addToast({ type: 'error', message: 'Could not extract text from this PDF' }));
+        return;
+      }
+      await dispatch(uploadResumeFromText({ filename: file.name, text })).unwrap();
+      dispatch(addToast({ type: 'success', message: 'Resume uploaded and analyzed!' }));
+    } catch (err) {
+      dispatch(addToast({ type: 'error', message: err || 'Upload failed' }));
+    } finally {
+      setParsing(false);
+    }
   };
 
   return (
@@ -53,7 +81,7 @@ export function ResumeUploadWidget() {
           </svg>
         </div>
         <p className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-          {loading ? 'Uploading...' : 'Drop your resume here or click to browse'}
+          {parsing ? 'Parsing PDF...' : loading ? 'Uploading...' : 'Drop your resume here or click to browse'}
         </p>
         <p className="text-xs text-surface-500">Supports PDF, DOCX (max 10MB)</p>
       </motion.div>

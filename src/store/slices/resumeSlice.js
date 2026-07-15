@@ -1,10 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { resumesApi } from '../../services/api';
 
+function unwrap(res) {
+  return res.data?.data ?? res.data;
+}
+
 export const uploadResume = createAsyncThunk('resumes/upload', async (formData, { rejectWithValue }) => {
   try {
     const res = await resumesApi.upload(formData);
-    return res.data;
+    return unwrap(res);
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || 'Upload failed');
+  }
+});
+
+export const uploadResumeFromText = createAsyncThunk('resumes/uploadFromText', async ({ filename, text }, { rejectWithValue }) => {
+  try {
+    const res = await resumesApi.uploadFromText({ filename, text });
+    return unwrap(res);
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || 'Upload failed');
   }
@@ -39,6 +52,9 @@ const resumeSlice = createSlice({
       .addCase(uploadResume.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(uploadResume.fulfilled, (state, action) => { state.loading = false; state.list.unshift(action.payload); state.current = action.payload; })
       .addCase(uploadResume.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(uploadResumeFromText.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(uploadResumeFromText.fulfilled, (state, action) => { state.loading = false; state.list.unshift(action.payload); state.current = action.payload; })
+      .addCase(uploadResumeFromText.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(fetchResumes.pending, (state) => { state.loading = true; })
       .addCase(fetchResumes.fulfilled, (state, action) => { state.loading = false; state.list = action.payload; })
       .addCase(fetchResumes.rejected, (state, action) => { state.loading = false; state.error = action.payload; })

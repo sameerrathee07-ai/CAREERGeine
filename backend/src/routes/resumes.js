@@ -6,6 +6,7 @@ import * as resumeController from '../controllers/resumeController.js';
 const router = Router();
 
 router.post('/', verifyToken, uploadResume, handleMulterError, resumeController.uploadResume);
+router.post('/from-text', verifyToken, resumeController.uploadResumeFromText);
 router.get('/', verifyToken, resumeController.listResumes);
 router.get('/:id', verifyToken, resumeController.getResume);
 router.delete('/:id', verifyToken, resumeController.deleteResume);

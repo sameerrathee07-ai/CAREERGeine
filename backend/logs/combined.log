@@ -44,3 +44,42 @@
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3118389d9bcsm64477265eec.20 - gsmtp
 2026-07-14 11:03:19 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b659d8da9sm131848425c88.14 - gsmtp
+2026-07-15 12:40:53 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3118ee6080dsm66526770eec.17 - gsmtp
+2026-07-15 12:41:41 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-313b4b97661sm55943944eec.7 - gsmtp
+2026-07-15 12:42:45 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b84d6ce15sm44480219c88.5 - gsmtp
+2026-07-15 12:55:42 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b8deb2a21sm36540607c88.3 - gsmtp
+2026-07-15 13:06:49 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-311935fd091sm64268074eec.24 - gsmtp
+2026-07-15 13:07:16 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-313b9ca880fsm43120842eec.23 - gsmtp
+2026-07-15 13:08:07 [INFO] New Google user created: EK2PAqNORheeor6FXaT4pL3fFgk1 (sameerrathee07@gmail.com)
+2026-07-15 13:08:07 [INFO] Google sign-in: EK2PAqNORheeor6FXaT4pL3fFgk1 (sameerrathee07@gmail.com)
+2026-07-15 13:08:22 [ERROR] Email send failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-313f3ea883asm14952541eec.29 - gsmtp
+2026-07-15 13:08:22 [INFO] Role set for EK2PAqNORheeor6FXaT4pL3fFgk1: student
+2026-07-15 13:14:57 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31174a583bcsm94624781eec.19 - gsmtp
+2026-07-15 13:34:56 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b987fc629sm51088359c88.0 - gsmtp
+2026-07-15 13:37:25 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13cd22ec3cbsm1062338c88.15 - gsmtp
+2026-07-15 13:37:38 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31174a583bcsm94867277eec.19 - gsmtp
+2026-07-15 13:37:42 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-311747f596asm87763882eec.2 - gsmtp
+2026-07-15 13:39:18 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b8deb2a21sm36941069c88.3 - gsmtp
+2026-07-15 13:40:28 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b659c865asm96414553c88.11 - gsmtp
+2026-07-15 13:41:21 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3140ad8da9csm2269642eec.26 - gsmtp
+2026-07-15 13:42:41 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-311747f5975sm83103418eec.4 - gsmtp
+2026-07-15 13:45:23 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-311747f72a6sm104370555eec.1 - gsmtp
+2026-07-15 14:07:10 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31174839f89sm87514659eec.10 - gsmtp

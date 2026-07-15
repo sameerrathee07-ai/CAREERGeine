@@ -49,6 +49,7 @@ export const usersApi = {
 export const resumesApi = {
   upload: (formData) =>
     api.post('/resumes', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  uploadFromText: (data) => api.post('/resumes/from-text', data),
   getAll: (params) => api.get('/resumes', { params }),
   getById: (id) => api.get(`/resumes/${id}`),
   delete: (id) => api.delete(`/resumes/${id}`),

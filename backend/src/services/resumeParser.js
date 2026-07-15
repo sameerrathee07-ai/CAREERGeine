@@ -126,6 +126,54 @@ export function deleteUploadedFile(filePath) {
   }
 }
 
+export async function analyzeResumeText(resumeText, jobDescription) {
+  if (!resumeText || resumeText.trim().length < 20) {
+    throw new BadRequestError('Resume text is too short or empty');
+  }
+
+  const sections = extractSections(resumeText);
+  const skills = extractSkills(resumeText);
+  const experience = extractExperience(sections.experience);
+  const education = extractEducation(sections.education);
+  const name = extractName(resumeText);
+  const email = extractEmail(resumeText);
+  const phone = extractPhone(resumeText);
+  const suggestions = generateSuggestions(resumeText, jobDescription);
+
+  const skillScore = Math.min(100, Math.round((skills.length / 20) * 100));
+  const contentScore = Math.min(100, Math.round((resumeText.split(/\s+/).length / 300) * 100));
+  const formatScore = sections.experience && sections.education ? 90 : 60;
+  const atsScore = Math.min(100, Math.round((skillScore + contentScore + formatScore) / 3));
+  const resumeScore = Math.min(100, Math.round((atsScore * 0.5) + (skillScore * 0.3) + (contentScore * 0.2)));
+
+  let matchScore = 0;
+  if (jobDescription) {
+    matchScore = computeMatchScore(resumeText, jobDescription, skills);
+  }
+
+  return {
+    text: resumeText,
+    name,
+    email,
+    phone,
+    skills,
+    sections,
+    experience,
+    education,
+    scores: {
+      resumeScore,
+      atsScore,
+      skillScore,
+      contentScore,
+      formatScore,
+      matchScore,
+    },
+    suggestions,
+    wordCount: resumeText.split(/\s+/).length,
+    pageCount: 1,
+  };
+}
+
 export default {
   parsePDF,
   analyzeResume,

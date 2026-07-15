@@ -1,4 +1,4 @@
-import { db, Timestamp } from '../config/firebase.js';
+import { db, Timestamp, FieldValue } from '../config/firebase.js';
 import { createDocument, getDocument, updateDocument, deleteDocument, queryDocuments } from '../services/firestore.js';
 import { uploadFile, deleteFile } from '../services/storage.js';
 import { analyzeResume, saveUploadedFile, deleteUploadedFile, getUploadPath } from '../services/resumeParser.js';
@@ -50,6 +50,106 @@ export async function uploadResume(req, res, next) {
     }));
 
     res.status(201).json({ success: true, data: resume });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function uploadResumeFromText(req, res, next) {
+  try {
+    const { filename, text } = req.body;
+    if (!filename) throw new BadRequestError('Filename is required');
+    if (!text || text.trim().length < 20) throw new BadRequestError('Resume text is too short or empty');
+
+    const mimeType = filename.endsWith('.pdf') ? 'application/pdf' : 'text/plain';
+
+    const resume = await createDocument('resumes', {
+      userId: req.user.uid,
+      filename,
+      originalName: filename,
+      fileUrl: null,
+      fileSize: text.length,
+      mimeType,
+      text,
+      analysis: null,
+      status: 'completed',
+    });
+
+    await db.collection('users').doc(req.user.uid).update({
+      'stats.resumesUploaded': FieldValue.increment(1),
+    });
+
+    const { analyzeResumeText } = await import('../services/resumeParser.js');
+    const { aiAnalyzeResume } = await import('../services/aiResumeAnalysis.js');
+    const { aiParseResume } = await import('../services/aiResumeParser.js');
+
+    const parsed = await analyzeResumeText(text);
+    const resumeText = parsed.text || text;
+
+    const [aiParsed, aiAnalysis] = await Promise.all([
+      aiParseResume(resumeText),
+      aiAnalyzeResume(resumeText),
+    ]);
+
+    await updateDocument('resumes', resume.id, {
+      analysis: {
+        resumeScore: aiAnalysis.resumeScore,
+        atsScore: aiAnalysis.atsScore,
+        skillScore: aiAnalysis.skillScore,
+        contentScore: aiAnalysis.contentScore,
+        formatScore: aiAnalysis.formatScore,
+        matchScore: aiAnalysis.matchScore || 0,
+        summary: aiAnalysis.summary || '',
+        strengths: aiAnalysis.strengths || [],
+        weaknesses: aiAnalysis.weaknesses || [],
+        suggestions: aiAnalysis.suggestions || parsed.suggestions || [],
+        actionVerbs: aiAnalysis.actionVerbs || [],
+        keywordSuggestions: aiAnalysis.keywordSuggestions || [],
+        careerRecommendations: aiAnalysis.careerRecommendations || [],
+        targetRoles: aiAnalysis.targetRoles || [],
+        missingSections: aiAnalysis.missingSections || [],
+        formattingIssues: aiAnalysis.formattingIssues || [],
+        grammarIssues: aiAnalysis.grammarIssues || [],
+        actionVerbScore: aiAnalysis.actionVerbScore || 0,
+        keywordDensity: aiAnalysis.keywordDensity || 0,
+        recruiterReadiness: aiAnalysis.recruiterReadiness || 0,
+        readabilityScore: aiAnalysis.readabilityScore || 0,
+        skills: aiParsed.skills || parsed.skills || [],
+        extractedName: aiParsed.name || parsed.name || '',
+        extractedEmail: aiParsed.email || parsed.email || '',
+        extractedPhone: aiParsed.phone || parsed.phone || '',
+        experience: aiParsed.experience || [{ title: '', company: '', description: parsed.experience || '' }],
+        education: aiParsed.education || [{ degree: parsed.education || '', institution: '' }],
+        certifications: aiParsed.certifications || [],
+        projects: aiParsed.projects || [],
+        languages: aiParsed.languages || [],
+        tools: aiParsed.tools || [],
+        softSkills: aiParsed.softSkills || [],
+        sections: parsed.sections || {},
+        wordCount: parsed.wordCount || resumeText.split(/\s+/).length,
+        pageCount: parsed.pageCount || 1,
+        analyzedAt: Timestamp.now(),
+        aiSource: aiAnalysis._source || 'nlp',
+      },
+    });
+
+    await sendNotification({
+      userId: req.user.uid,
+      type: 'resume_analyzed',
+      title: 'Resume Analysis Complete',
+      message: `Your resume scored ${aiAnalysis.resumeScore}%. View detailed feedback.`,
+      data: { resumeId: resume.id, score: aiAnalysis.resumeScore, aiSource: aiAnalysis._source },
+    });
+
+    logger.info(`Resume uploaded from text: ${filename} by user ${req.user.uid}`);
+
+    await db.collection('auditLogs').add(createAuditLog({
+      userId: req.user.uid, action: 'resume.uploadText', resource: 'resumes',
+      resourceId: resume.id, details: { filename }, req,
+    }));
+
+    const updated = await getDocument('resumes', resume.id);
+    res.status(201).json({ success: true, data: updated });
   } catch (err) {
     next(err);
   }
