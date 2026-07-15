@@ -63,14 +63,16 @@ export function onAuthChange(callback) {
   return () => {};
 }
 
-// ─── Google Sign-In (redirect — works on Render/Netlify) ───
+// ─── Google Sign-In (popup) ───
 
 export async function signInWithGoogle() {
   checkInit();
-  const { GoogleAuthProvider, signInWithRedirect } = await import('firebase/auth');
+  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-  await signInWithRedirect(auth, provider);
+  const result = await signInWithPopup(auth, provider);
+  const idToken = await result.user.getIdToken();
+  return { user: result.user, idToken };
 }
 
 export async function getGoogleRedirectResult() {
