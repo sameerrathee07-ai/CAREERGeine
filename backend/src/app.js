@@ -1,9 +1,15 @@
 import express from 'express';
+import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import { fileURLToPath } from 'url';
 import { errorHandler } from './middleware/errorHandler.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distPath = path.resolve(__dirname, '../../dist');
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -22,9 +28,9 @@ const app = express();
 // Security headers (COOP disabled — Firebase popup auth needs cross-origin)
 app.use(helmet({ crossOriginOpenerPolicy: false }));
 
-// CORS
+// CORS (only needed if frontend is on a different origin)
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -75,7 +81,17 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/help', helpRoutes);
 app.use('/api/ai', aiRoutes);
 
-// 404 handler
+// Serve built frontend in production
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+
+  app.get('*', (req, res) => {
+    if (req.path.startsWith('/api/')) return;
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+// 404 handler for API routes
 app.use((req, res) => {
   res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: `Route ${req.originalUrl} not found` } });
 });
