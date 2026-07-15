@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/server.js",
-    "start": "node src/server.js",
-    "build:frontend": "cd .. && npm install && npm run build"
+    "start": "node src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
