@@ -13,43 +13,16 @@ export function useGoogleAuth() {
   const signIn = useCallback(async () => {
     setGoogleLoading(true);
     dispatch(clearError());
-
-    try {
-      const result = await firebaseGoogleSignIn();
-
-      const resultAction = await dispatch(loginWithGoogle(result.idToken));
-
-      if (loginWithGoogle.fulfilled.match(resultAction)) {
-        const payload = resultAction.payload;
-        if (payload.roleSet && payload.role) {
-          if (payload.role === 'admin') navigate('/admin', { replace: true });
-          else if (payload.role === 'recruiter') navigate('/recruiter', { replace: true });
-          else navigate('/dashboard', { replace: true });
-        }
-      } else if (loginWithGoogle.rejected.match(resultAction)) {
-        dispatch(setAuthError(resultAction.payload || 'Google sign-in failed'));
-      }
-    } catch (err) {
-      if (err.code === 'auth/popup-closed-by-user') {
-        dispatch(setAuthError(null));
-      } else if (err.code === 'auth/account-exists-with-different-credential') {
-        dispatch(setAuthError('An account already exists with this email. Try signing in with email and password.'));
-      } else if (err.code === 'auth/cancelled-popup-request') {
-        dispatch(setAuthError(null));
-      } else {
-        dispatch(setAuthError(err.message || 'Google sign-in failed. Please try again.'));
-      }
-    } finally {
-      setGoogleLoading(false);
-    }
-  }, [dispatch, navigate]);
+    await firebaseGoogleSignIn();
+  }, [dispatch]);
 
   useEffect(() => {
     let cancelled = false;
 
     async function handleRedirect() {
+      let result;
       try {
-        const result = await getGoogleRedirectResult();
+        result = await getGoogleRedirectResult();
         if (!result || cancelled) return;
       } catch (err) {
         if (!cancelled) dispatch(setAuthError(err.message || 'Google sign-in failed'));

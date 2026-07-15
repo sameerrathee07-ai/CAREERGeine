@@ -63,21 +63,14 @@ export function onAuthChange(callback) {
   return () => {};
 }
 
-// ─── Google Sign-In (popup — works on localhost without emulator) ───
+// ─── Google Sign-In (redirect — works on Render/Netlify) ───
 
 export async function signInWithGoogle() {
   checkInit();
-  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+  const { GoogleAuthProvider, signInWithRedirect } = await import('firebase/auth');
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const idToken = await result.user.getIdToken();
-    return { user: result.user, idToken };
-  } catch (err) {
-    throw err;
-  }
+  await signInWithRedirect(auth, provider);
 }
 
 export async function getGoogleRedirectResult() {
