@@ -1,0 +1,46 @@
+2026-07-13 20:19:45 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3118ee6091dsm80528993eec.14 - gsmtp
+2026-07-13 20:59:45 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3120c8e41fcsm38134448eec.15 - gsmtp
+2026-07-13 21:16:28 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b9081d5c3sm22198051c88.9 - gsmtp
+2026-07-13 21:17:22 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b924258a2sm54785376c88.1 - gsmtp
+2026-07-13 21:19:20 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b987fc629sm25479528c88.0 - gsmtp
+2026-07-13 21:19:51 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31174ac14f2sm76300620eec.27 - gsmtp
+2026-07-13 21:21:46 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b924258a2sm54831853c88.1 - gsmtp
+2026-07-13 21:22:22 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b9a67c217sm13854616c88.8 - gsmtp
+2026-07-13 21:25:17 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31189cd8234sm64471293eec.9 - gsmtp
+2026-07-13 21:27:38 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3119d5cf176sm47324034eec.12 - gsmtp
+2026-07-13 21:28:53 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3117483dec6sm73488421eec.11 - gsmtp
+2026-07-13 21:31:24 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-31174839f89sm71977930eec.10 - gsmtp
+2026-07-13 21:36:12 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b9a67c217sm13933726c88.8 - gsmtp
+2026-07-13 21:45:09 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-313b4cbafa1sm57071002eec.6 - gsmtp
+2026-07-13 21:47:52 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-311747f596asm71873350eec.2 - gsmtp
+2026-07-13 21:57:34 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b659d87a2sm65226004c88.13 - gsmtp
+2026-07-14 09:51:42 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3117462f5c7sm81679980eec.0 - gsmtp
+2026-07-14 09:53:19 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b987fc629sm30772398c88.0 - gsmtp
+2026-07-14 09:55:35 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3119c2a7bb5sm49663031eec.25 - gsmtp
+2026-07-14 09:58:54 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3118ee6091dsm87506320eec.14 - gsmtp
+2026-07-14 09:59:55 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b659d8da9sm130202240c88.14 - gsmtp
+2026-07-14 10:26:33 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3118389d9bcsm64477265eec.20 - gsmtp
+2026-07-14 11:03:19 [ERROR] Email transporter verification failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials a92af1059eb24-13b659d8da9sm131848425c88.14 - gsmtp
